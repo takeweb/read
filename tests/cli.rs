@@ -72,6 +72,24 @@ fn dies_bad_lines() -> TestResult {
 
 // --------------------------------------------------
 #[test]
+fn dies_zero_lines() -> TestResult {
+    let bad = "0";
+    let expected = format!(
+        "error: invalid value '{}' for '--lines <LINES>': {} is not in 1..18446744073709551615",
+        &bad, &bad
+    );
+    println!("{}", &bad);
+    Command::cargo_bin(PRG)?
+        .args(&["-n", "0", EMPTY])
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains(expected));
+
+    Ok(())
+}
+
+// --------------------------------------------------
+#[test]
 fn dies_bytes_and_lines() -> TestResult {
     let msg = "the argument '--lines <LINES>' cannot be \
                used with '--bytes <BYTES>'";

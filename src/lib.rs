@@ -18,9 +18,10 @@ pub struct Args {
         short = 'n',
         long = "lines",
         value_name = "LINES",
+        value_parser(clap::value_parser!(u64).range(1..)),
         default_value_t = 10
     )]
-    lines: usize,
+    lines: u64,
 
     /// Number of bytes
     #[arg(
